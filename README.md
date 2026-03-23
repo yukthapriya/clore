@@ -1,7 +1,6 @@
 # Cloré — AI Personal Stylist 
 
 > A mobile-first web app that acts as your personal stylist — AI-powered outfit suggestions, wardrobe management, shopping compatibility checks, and virtual try-on, all running from your local machine.
-
 ---
 
 ## What It Does
