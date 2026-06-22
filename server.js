@@ -38,10 +38,10 @@ app.get('/health', (_, res) => res.json({ ok: true }))
 
 const distPath = path.join(__dirname, 'dist')
 if (fs.existsSync(distPath)) {
+  const indexPath = path.join(distPath, 'index.html')
+  const indexHtml = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, 'utf8') : null
   app.use(express.static(distPath))
-  app.get('*', (_, res) => {
-    res.sendFile(path.join(distPath, 'index.html'))
-  })
+  if (indexHtml) app.get('*', (_, res) => res.type('html').send(indexHtml))
 }
 
 app.listen(port, () => console.log(`✅ Node server running on http://localhost:${port}`))
