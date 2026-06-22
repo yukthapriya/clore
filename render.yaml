@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: clore-web
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PYTHON_TRYON_URL
+        fromService:
+          type: pserv
+          name: clore-tryon
+          property: hostport
+
+  - type: pserv
+    name: clore-tryon
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python vton_server.py
