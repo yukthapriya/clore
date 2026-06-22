@@ -89,8 +89,8 @@ export default function TryOnPage({ item, onClose }) {
       console.log('Person image starts with:', avatarB64?.slice(0, 30))
       console.log('Garment image starts with:', garmentB64?.slice(0, 30))
 
-      // Call Python server directly — bypass Node
-      const res = await fetch('http://localhost:3002/api/tryon', {
+      // Call through Node proxy for local and production deployments
+      const res = await fetch('/api/tryon', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -129,7 +129,7 @@ export default function TryOnPage({ item, onClose }) {
         <div style={{ marginBottom:20, padding:'12px 16px', background:'rgba(122,140,110,0.1)', borderRadius:12, display:'flex', alignItems:'center', gap:10 }}>
           <span style={{ fontSize:18 }}>✓</span>
           <div>
-            <p style={{ fontSize:13, fontWeight:600, color:'#7A8C6E' }}>Running locally on your Mac</p>
+            <p style={{ fontSize:13, fontWeight:600, color:'#7A8C6E' }}>AI-powered try-on</p>
             <p style={{ fontSize:11, color:'rgba(26,26,26,0.5)' }}>No API key needed — completely free</p>
           </div>
         </div>

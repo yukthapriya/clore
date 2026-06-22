@@ -7,6 +7,10 @@ export default defineConfig({
     host: true,
     port: 5173,
     proxy: {
+      '/api/tryon': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
       '/replicate': {
         target: 'https://api.replicate.com',
         changeOrigin: true,

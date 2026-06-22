@@ -149,6 +149,23 @@ Outfit suggestions and shopping analysis work immediately. Virtual try-on requir
 
 ---
 
+## Deploy on Render
+
+This repo includes `render.yaml` for a two-service deploy:
+
+- `clore-web` (Node): builds the React app, serves `dist`, proxies `/api/tryon`
+- `clore-tryon` (Python): runs `tryon_server.py`
+
+### Steps
+
+1. Push this repository to GitHub.
+2. In Render, create a new Blueprint and select this repo.
+3. After services are created, set `VITE_GROQ_KEY` on `clore-web`.
+
+`PYTHON_SERVER_URL` is wired automatically from `clore-web` to `clore-tryon` via `render.yaml`.
+
+---
+
 ## Design Decisions
 
 **Groq over OpenAI** — near-instant LLM responses on a generous free tier. The API is called directly from the browser so no AI backend is needed at all.
