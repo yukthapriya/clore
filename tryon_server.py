@@ -5,6 +5,7 @@ import base64
 import json
 import time
 import io
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -126,5 +127,6 @@ def tryon():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    print('✅ Python try-on server running on http://localhost:3002')
-    app.run(port=3002, debug=False)
+    port = int(os.environ.get('PORT', 3002))
+    print(f'✅ Python try-on server running on http://localhost:{port}')
+    app.run(host='0.0.0.0', port=port, debug=False)

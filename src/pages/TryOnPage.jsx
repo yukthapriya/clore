@@ -89,8 +89,7 @@ export default function TryOnPage({ item, onClose }) {
       console.log('Person image starts with:', avatarB64?.slice(0, 30))
       console.log('Garment image starts with:', garmentB64?.slice(0, 30))
 
-      // Call Python server directly — bypass Node
-      const res = await fetch('http://localhost:3002/api/tryon', {
+      const res = await fetch('/api/tryon', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -117,7 +116,7 @@ export default function TryOnPage({ item, onClose }) {
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'56px 24px 20px', borderBottom:'1px solid rgba(139,115,85,0.1)' }}>
         <div>
           <h1 style={{ fontFamily:'Georgia, serif', fontSize:26, fontWeight:700 }}>Virtual Try-On</h1>
-          <p style={{ fontSize:12, color:'rgba(26,26,26,0.45)' }}>AI powered • Runs on your Mac</p>
+          <p style={{ fontSize:12, color:'rgba(26,26,26,0.45)' }}>AI powered • Virtual try-on</p>
         </div>
         <button onClick={onClose} style={{ width:36, height:36, borderRadius:'50%', background:'rgba(26,26,26,0.08)', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}>
           <X size={18} />
@@ -129,7 +128,7 @@ export default function TryOnPage({ item, onClose }) {
         <div style={{ marginBottom:20, padding:'12px 16px', background:'rgba(122,140,110,0.1)', borderRadius:12, display:'flex', alignItems:'center', gap:10 }}>
           <span style={{ fontSize:18 }}>✓</span>
           <div>
-            <p style={{ fontSize:13, fontWeight:600, color:'#7A8C6E' }}>Running locally on your Mac</p>
+          <p style={{ fontSize:13, fontWeight:600, color:'#7A8C6E' }}>Powered by Hugging Face spaces</p>
             <p style={{ fontSize:11, color:'rgba(26,26,26,0.5)' }}>No API key needed — completely free</p>
           </div>
         </div>
@@ -201,7 +200,7 @@ export default function TryOnPage({ item, onClose }) {
           {loading ? <><div className="spinner" style={{ borderTopColor:'#F7F4EF' }} />{loadingMsg}</> : <><Sparkles size={20} />Try It On Me</>}
         </button>
 
-        {loading && <p style={{ textAlign:'center', fontSize:12, color:'rgba(26,26,26,0.4)', marginBottom:20 }}>Running AI on your Mac — takes 1-3 minutes ☕</p>}
+        {loading && <p style={{ textAlign:'center', fontSize:12, color:'rgba(26,26,26,0.4)', marginBottom:20 }}>Generating your look — takes 1-3 minutes ☕</p>}
 
         {error && (
           <div style={{ padding:'14px 16px', background:'rgba(192,57,43,0.08)', borderRadius:12, border:'1px solid rgba(192,57,43,0.2)', marginBottom:20 }}>
