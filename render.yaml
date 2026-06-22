@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: clore-web
+    env: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm run server
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: PYTHON_SERVICE_URL
+        value: http://clore-tryon:10000
+
+  - type: pserv
+    name: clore-tryon
+    env: python
+    buildCommand: pip install flask flask-cors pillow gradio-client requests
+    startCommand: python tryon_server.py
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
