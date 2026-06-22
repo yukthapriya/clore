@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: clore-web
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRYON_URL
+        fromService:
+          name: clore-tryon
+          type: pserv
+          property: hostport
+
+  - type: pserv
+    name: clore-tryon
+    runtime: python
+    buildCommand: pip install flask flask-cors requests
+    startCommand: python tryon_server.py
