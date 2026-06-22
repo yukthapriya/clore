@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import fetch from 'node-fetch'
+import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -10,6 +11,8 @@ const pythonServerUrl = process.env.PYTHON_SERVER_URL || 'http://localhost:3002'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const distPath = path.join(__dirname, 'dist')
+const indexPath = path.join(distPath, 'index.html')
+const indexHtml = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, 'utf8') : null
 
 app.use(cors())
 app.use(express.json({ limit: '50mb' }))
@@ -33,5 +36,8 @@ app.post('/api/tryon', async (req, res) => {
 })
 
 app.get('/health', (_, res) => res.json({ ok: true }))
-app.get('*', (_, res) => res.sendFile(path.join(distPath, 'index.html')))
+app.get('*', (_, res) => {
+  if (!indexHtml) return res.status(503).send('Frontend build not found. Run npm run build.')
+  return res.type('html').send(indexHtml)
+})
 app.listen(port, () => console.log(`✅ Node server forwarding to Python on http://localhost:${port}`))
