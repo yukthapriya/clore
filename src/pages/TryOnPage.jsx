@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react'
 import { X, Sparkles, RefreshCw } from 'lucide-react'
 import { useApp } from '../App.jsx'
 
+const TRYON_API_URL = import.meta.env.VITE_TRYON_API_URL || (import.meta.env.DEV ? 'http://localhost:3001/api/tryon' : '/api/tryon')
+
 function toBase64(file) {
   return new Promise((res, rej) => {
     const r = new FileReader()
@@ -89,8 +91,7 @@ export default function TryOnPage({ item, onClose }) {
       console.log('Person image starts with:', avatarB64?.slice(0, 30))
       console.log('Garment image starts with:', garmentB64?.slice(0, 30))
 
-      // Call Python server directly — bypass Node
-      const res = await fetch('http://localhost:3002/api/tryon', {
+      const res = await fetch(TRYON_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

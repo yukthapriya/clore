@@ -149,6 +149,26 @@ Outfit suggestions and shopping analysis work immediately. Virtual try-on requir
 
 ---
 
+## Deploy on Render
+
+This repo includes a Render Blueprint at `/home/runner/work/clore/clore/render.yaml`.
+
+### Services created
+- `clore-web` (Node web service): builds the Vite app, serves `dist`, and proxies `/api/tryon`
+- `clore-tryon` (Python private service): runs `vton_server.py`
+
+### Deploy steps
+1. Push this repository to GitHub.
+2. In Render, choose **New + → Blueprint** and select this repo.
+3. Render reads `render.yaml` and creates both services.
+4. After first deploy, open `clore-web` URL.
+
+### Environment variables
+- Set `VITE_GROQ_KEY` on `clore-web` if you want outfit/shopping AI enabled.
+- `PYTHON_TRYON_URL` is wired automatically from `clore-web` to the private Python service via Blueprint.
+
+---
+
 ## Design Decisions
 
 **Groq over OpenAI** — near-instant LLM responses on a generous free tier. The API is called directly from the browser so no AI backend is needed at all.
